@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn } from "typeorm";
 
 export class AbstractEntity<T> {
 

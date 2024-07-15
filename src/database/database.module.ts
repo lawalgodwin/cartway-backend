@@ -9,11 +9,9 @@ import { EntityClassOrSchema } from "@nestjs/typeorm/dist/interfaces/entity-clas
     useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         url: configService.get('POSTGRES_DATABASE_URL'),
-        synchronize: true,
-        // logging: true,
-        entities: ['dist/resources/**/*.entity.js'],
-        subscribers: [],
-        migrations: ["dist/database/migrations/*.js"],
+        entities: ['./dist/resource/**/*.entity.js'],
+        synchronize: false,
+        migrations: ['./dist/database/migrations/*.js'],
     }),
     inject: [ConfigService]
 })]})

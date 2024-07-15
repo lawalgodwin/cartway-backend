@@ -9,7 +9,8 @@ export abstract class AbstractRepository<T extends AbstractEntity<T>> {
     constructor(private readonly entityRepository: Repository<T>) {}
 
     async create (entity: T): Promise<T> {
-        return await this.entityRepository.save(entity)
+        const user = await this.entityRepository.save(entity)
+        return user
     }
 
     async findOne (where: FindOptionsWhere<T>, relations?: FindOptionsRelations<T>): Promise<T> {
