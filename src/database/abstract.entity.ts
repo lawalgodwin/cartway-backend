@@ -1,11 +1,10 @@
-import { Entity, PrimaryGeneratedColumn } from "typeorm";
+import { PrimaryGeneratedColumn } from 'typeorm';
 
 export class AbstractEntity<T> {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @PrimaryGeneratedColumn('uuid')
-    id: string
-
-    constructor(entity: Partial<T>) {
-        Object.assign(this, entity)
-    }
+  constructor(entity: Partial<T>) {
+    Object.assign(this, entity);
+  }
 }

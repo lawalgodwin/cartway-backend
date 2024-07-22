@@ -3,9 +3,9 @@ import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-    constructor (private appService: AppService) {}
-    @Get('/')
-    index () {
-        return this.appService.getHomePage()
-    }
+  constructor(private appService: AppService) {}
+  @Get('/')
+  index() {
+    return this.appService.getHomePage();
+  }
 }
