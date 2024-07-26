@@ -1,21 +1,24 @@
 import { MailerService } from '@nestjs-modules/mailer';
-import { Injectable } from '@nestjs/common';
-import { User } from 'src/resource/users/entities/user.entity';
+import { Process, Processor } from '@nestjs/bull';
+import { Job } from 'bullmq';
+import { OTP_QUEUE, VERIFY_EMAIL_ADDRESS } from 'src/common';
+import { OTP } from 'src/common/types/otp.type';
 
-@Injectable()
+@Processor(OTP_QUEUE)
 export class MailService {
   constructor(private mailerService: MailerService) {}
 
-  async sendConfirmationMail(user: Partial<User>, otp: string) {
-    const fullName = `${user.firstName} ${user.lastName}`;
+  @Process(VERIFY_EMAIL_ADDRESS)
+  async sendConfirmationMail(job: Job<OTP>) {
+    const fullName = `${job.data.user.firstName} ${job.data.user.lastName}`;
 
     await this.mailerService.sendMail({
-      to: user.email,
+      to: job.data.user.email,
       subject: 'Welcome to Cartway! Please confirm your Email',
       template: './confirmation',
       context: {
         fullName: fullName,
-        otp: otp,
+        otp: job.data.code,
       },
     });
   }
