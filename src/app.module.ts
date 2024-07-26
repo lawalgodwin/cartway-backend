@@ -6,9 +6,11 @@ import { UsersModule } from './resource/users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { MailModule } from './mail/mail.module';
 import { BullModule } from '@nestjs/bull';
+import { ConfigModule } from './config';
 
 @Module({
   imports: [
+    ConfigModule,
     DatabaseModule, 
     UsersModule, 
     AuthModule, 

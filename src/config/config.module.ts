@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import {
   ConfigService,
   ConfigModule as NestConfigModule,
 } from '@nestjs/config';
 import * as Joi from 'joi';
 
+@Global()
 @Module({
   imports: [
     NestConfigModule.forRoot({
@@ -17,6 +18,7 @@ import * as Joi from 'joi';
         SMTP_TLS: Joi.boolean().required(),
         SMTP_SSL: Joi.boolean().required(),
         SMTP_PORT: Joi.number().required(),
+        OTP_LENGTH: Joi.number().required()
       }),
     }),
   ],

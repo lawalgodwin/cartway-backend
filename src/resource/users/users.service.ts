@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { UsersRepository } from './users.repository';
 import { CreateUserType } from 'src/common/types';
+import { USER_ALREADY_EXISTS } from 'src/common';
 
 @Injectable()
 export class UsersService {
@@ -17,7 +18,7 @@ export class UsersService {
     // check if user exists
     if (user.length)
       throw new BadRequestException(
-        'User with this email address already exist',
+        USER_ALREADY_EXISTS,
       );
     return this.userRepository.create(newUser);
   }
