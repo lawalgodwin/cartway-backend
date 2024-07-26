@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { MailModule } from './mail/mail.module';
 import { BullModule } from '@nestjs/bull';
 import { ConfigModule } from './config';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -15,11 +16,14 @@ import { ConfigModule } from './config';
     UsersModule, 
     AuthModule, 
     MailModule,
-    BullModule.forRoot({
-      redis: {
-        host: 'localhost',
-        port: 6379
-      }
+    BullModule.forRootAsync({
+      useFactory: async (configService: ConfigService) => ({
+        redis: {
+          host: configService.get('REDIS_HOST'),
+          port: configService.get<number>('REDIS_PORT'),
+        }
+      }),
+      inject: [ConfigService]
     }),
   ],
   providers: [AppService],

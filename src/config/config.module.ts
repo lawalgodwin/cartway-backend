@@ -5,11 +5,11 @@ import {
 } from '@nestjs/config';
 import * as Joi from 'joi';
 
-@Global()
 @Module({
   imports: [
     NestConfigModule.forRoot({
-      validationOptions: Joi.object({
+      isGlobal: true,
+      validationSchema: Joi.object({
         POSTGRES_DATABASE_URL: Joi.string().required(),
         SMTP_HOST: Joi.string().required(),
         SMTP_USER: Joi.string().required(),
@@ -18,7 +18,9 @@ import * as Joi from 'joi';
         SMTP_TLS: Joi.boolean().required(),
         SMTP_SSL: Joi.boolean().required(),
         SMTP_PORT: Joi.number().required(),
-        OTP_LENGTH: Joi.number().required()
+        OTP_LENGTH: Joi.number().required(),
+        REDIS_HOST: Joi.string().required(),
+        REDIS_PORT: Joi.number().required()
       }),
     }),
   ],
