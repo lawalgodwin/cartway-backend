@@ -8,11 +8,11 @@ import { OTP_QUEUE } from 'src/common';
 
 @Module({
   imports: [
-    UsersModule, 
+    UsersModule,
     MailModule,
     BullModule.registerQueue({
-      name: OTP_QUEUE
-    })
+      name: OTP_QUEUE,
+    }),
   ],
   controllers: [AuthController],
   providers: [AuthService],

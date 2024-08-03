@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigService } from '@nestjs/config';
 import { EntityClassOrSchema } from '@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type';
 import { dataSourceOptions } from './data-source';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
-      useFactory: async () => (dataSourceOptions),
+      useFactory: async () => dataSourceOptions,
     }),
   ],
 })
@@ -16,4 +15,3 @@ export class DatabaseModule {
     return TypeOrmModule.forFeature(entities);
   }
 }
-

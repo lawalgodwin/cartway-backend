@@ -12,7 +12,7 @@ export class AuthService {
   constructor(
     private userService: UsersService,
     private readonly configSevice: ConfigService,
-    @InjectQueue(OTP_QUEUE) private readonly otpMailQueue: Queue
+    @InjectQueue(OTP_QUEUE) private readonly otpMailQueue: Queue,
   ) {}
 
   // register a user
@@ -20,10 +20,13 @@ export class AuthService {
     const otp = await generateOtp(this.configSevice.get<number>('OTP_LENGTH'));
     try {
       await this.userService.create(newUserDeatils);
-      this.otpMailQueue.add(VERIFY_EMAIL_ADDRESS, {user: newUserDeatils, code: otp})
-      return "Email sent to confirm user email address";
+      this.otpMailQueue.add(VERIFY_EMAIL_ADDRESS, {
+        user: newUserDeatils,
+        code: otp,
+      });
+      return 'Email sent to confirm user email address';
     } catch (error: any) {
-        throw error
+      throw error;
     }
   }
 }

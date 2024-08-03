@@ -12,18 +12,18 @@ import { ConfigService } from '@nestjs/config';
 @Module({
   imports: [
     ConfigModule,
-    DatabaseModule, 
-    UsersModule, 
-    AuthModule, 
+    DatabaseModule,
+    UsersModule,
+    AuthModule,
     MailModule,
     BullModule.forRootAsync({
       useFactory: async (configService: ConfigService) => ({
         redis: {
           host: configService.get('REDIS_HOST'),
           port: configService.get<number>('REDIS_PORT'),
-        }
+        },
       }),
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
   ],
   providers: [AppService],

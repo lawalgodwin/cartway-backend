@@ -5,6 +5,7 @@ import {
 } from '@nestjs/config';
 import * as Joi from 'joi';
 
+@Global()
 @Module({
   imports: [
     NestConfigModule.forRoot({
@@ -20,7 +21,7 @@ import * as Joi from 'joi';
         SMTP_PORT: Joi.number().required(),
         OTP_LENGTH: Joi.number().required(),
         REDIS_HOST: Joi.string().required(),
-        REDIS_PORT: Joi.number().required()
+        REDIS_PORT: Joi.number().required(),
       }),
     }),
   ],
