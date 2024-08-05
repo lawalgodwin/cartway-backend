@@ -1,11 +1,20 @@
 import { InjectQueue } from '@nestjs/bull';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Queue } from 'bull';
-import { OTP_QUEUE, VERIFY_EMAIL_ADDRESS } from 'src/common';
-import { generateOtp } from 'src/helpers';
+import {
+  EMAIL_OR_PASSWORD_NOT_CORRECT,
+  OTP_QUEUE,
+  VERIFY_EMAIL_ADDRESS,
+} from 'src/common';
+import {
+  generateOtp,
+  getSignedJwtToken,
+  verifyPasswordMatch,
+} from 'src/helpers';
 import { CreateUserDto } from 'src/resource/users/dto/create-user.dto';
 import { UsersService } from 'src/resource/users/users.service';
+import { LoginDto } from './dto';
 
 @Injectable()
 export class AuthService {
@@ -28,5 +37,19 @@ export class AuthService {
     } catch (error: any) {
       throw error;
     }
+  }
+
+  async loginUser(loginDto: LoginDto) {
+    const { email, password } = loginDto;
+    const users = await this.userService.find(email);
+    if (!users.length)
+      throw new UnauthorizedException(EMAIL_OR_PASSWORD_NOT_CORRECT);
+    const user = users[0];
+    const hashedPassword = user.password;
+    const isPasswordMatch = await verifyPasswordMatch(password, hashedPassword);
+    if (!isPasswordMatch)
+      throw new UnauthorizedException(EMAIL_OR_PASSWORD_NOT_CORRECT);
+    const accessToken = await getSignedJwtToken({ email, role: user.role });
+    return accessToken;
   }
 }
