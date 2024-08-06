@@ -28,7 +28,8 @@ export class AuthService {
   async registerUser(newUserDeatils: CreateUserDto) {
     const otp = await generateOtp(this.configSevice.get<number>('OTP_LENGTH'));
     try {
-      await this.userService.create(newUserDeatils);
+      const { email, firstName, lastName, password, phone } = newUserDeatils
+      await this.userService.create({email, firstName, lastName, password, phone});
       this.otpMailQueue.add(VERIFY_EMAIL_ADDRESS, {
         user: newUserDeatils,
         code: otp,

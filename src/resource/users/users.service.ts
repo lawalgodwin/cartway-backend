@@ -13,10 +13,8 @@ import { USER_ALREADY_EXISTS } from 'src/common';
 @Injectable()
 export class UsersService {
   constructor(private readonly userRepository: UsersRepository) {}
-  async create(createUserDto: CreateUserDto) {
-    const { email, firstName, lastName, password, phone }: CreateUserType =
-      createUserDto;
-    const newUser = new User({ email, firstName, lastName, password, phone });
+  async create(createUserDto: CreateUserDto | User) {
+    const newUser = new User(createUserDto);
     const user = await this.find(newUser.email);
 
     // check if user exists
