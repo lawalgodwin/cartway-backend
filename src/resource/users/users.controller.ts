@@ -19,7 +19,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
-import { AuthenticationGuard } from 'src/common/guards';
+import { AdminGuard, AuthenticationGuard, CustomerGuard, SuperAdminGuard } from 'src/common/guards';
 
 @ApiTags('users')
 @UseGuards(AuthenticationGuard)
@@ -28,6 +28,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @UseGuards(AdminGuard, SuperAdminGuard)
   @ApiCreatedResponse({ description: 'User object created' })
   @ApiBadRequestResponse({ description: 'Bad request: Try again' })
   create(@Body() createUserDto: CreateUserDto) {
@@ -35,6 +36,7 @@ export class UsersController {
   }
 
   @Get()
+  @UseGuards(AdminGuard)
   @ApiAcceptedResponse({})
   findAll() {
     return this.usersService.find();
