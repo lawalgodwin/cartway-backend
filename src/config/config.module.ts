@@ -23,6 +23,9 @@ import * as Joi from 'joi';
         REDIS_HOST: Joi.string().required(),
         REDIS_PORT: Joi.number().required(),
         JWT_SECRET: Joi.string().required(),
+        FIRST_SUPERUSER_EMAIL: Joi.string().required(),
+        FIRST_SUPERUSER: Joi.string().required(),
+        FIRST_SUPERUSER_PASSWORD: Joi.string().required()
       }),
     }),
   ],

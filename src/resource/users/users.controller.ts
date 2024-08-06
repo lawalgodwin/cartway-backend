@@ -14,21 +14,23 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import {
   ApiAcceptedResponse,
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
-import { AdminGuard, AuthenticationGuard, CustomerGuard, SuperAdminGuard } from 'src/common/guards';
+import { AdminGuard, AuthenticationGuard, SuperAdminGuard } from 'src/common/guards';
 
 @ApiTags('users')
 @UseGuards(AuthenticationGuard)
+@UseGuards(AdminGuard)
+@ApiBearerAuth()
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  @UseGuards(AdminGuard, SuperAdminGuard)
   @ApiCreatedResponse({ description: 'User object created' })
   @ApiBadRequestResponse({ description: 'Bad request: Try again' })
   create(@Body() createUserDto: CreateUserDto) {
@@ -36,7 +38,6 @@ export class UsersController {
   }
 
   @Get()
-  @UseGuards(AdminGuard)
   @ApiAcceptedResponse({})
   findAll() {
     return this.usersService.find();
@@ -57,6 +58,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @UseGuards(SuperAdminGuard)
   @ApiNotFoundResponse({ description: `User not found` })
   @ApiAcceptedResponse({ description: 'Delete a user with its ID' })
   @ApiBadRequestResponse({ description: `Bad request: Please try again` })

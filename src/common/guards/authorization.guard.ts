@@ -1,5 +1,6 @@
 import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from "@nestjs/common";
 import { Role } from "../types";
+import { USER_NOT_AUTHORIZED } from "../constants";
 
 @Injectable()
 export class AuthorizationGuard implements CanActivate {
@@ -9,7 +10,7 @@ export class AuthorizationGuard implements CanActivate {
         const request = httpCtx.getRequest()
         const user = request['user']
         const allowed = this.isAllowed([user.role])
-        if (!allowed) throw new ForbiddenException()
+        if (!allowed) throw new ForbiddenException(USER_NOT_AUTHORIZED)
         return true
     }
 
