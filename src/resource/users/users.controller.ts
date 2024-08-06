@@ -20,7 +20,14 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
-import { AdminGuard, AuthenticationGuard, SuperAdminGuard } from 'src/common/guards';
+import {
+  AdminGuard,
+  AuthenticationGuard,
+  CurrentUser,
+  RoleType,
+  SuperAdminGuard,
+} from 'src/common';
+import { JwtPayload } from 'src/common/types/jwtpayload.type';
 
 @ApiTags('users')
 @UseGuards(AuthenticationGuard)
@@ -33,8 +40,11 @@ export class UsersController {
   @Post()
   @ApiCreatedResponse({ description: 'User object created' })
   @ApiBadRequestResponse({ description: 'Bad request: Try again' })
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  create(
+    @Body() createUserDto: CreateUserDto,
+    @CurrentUser() userAccssToken: JwtPayload,
+  ) {
+    return this.usersService.create(createUserDto, userAccssToken.role);
   }
 
   @Get()

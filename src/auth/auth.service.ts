@@ -15,6 +15,7 @@ import {
 import { CreateUserDto } from 'src/resource/users/dto/create-user.dto';
 import { UsersService } from 'src/resource/users/users.service';
 import { LoginDto } from './dto';
+import { Role } from 'src/enums';
 
 @Injectable()
 export class AuthService {
@@ -28,8 +29,11 @@ export class AuthService {
   async registerUser(newUserDeatils: CreateUserDto) {
     const otp = await generateOtp(this.configSevice.get<number>('OTP_LENGTH'));
     try {
-      const { email, firstName, lastName, password, phone } = newUserDeatils
-      await this.userService.create({email, firstName, lastName, password, phone});
+      const { email, firstName, lastName, password, phone } = newUserDeatils;
+      await this.userService.create(
+        { email, firstName, lastName, password, phone },
+        Role.CUSTOMER,
+      );
       this.otpMailQueue.add(VERIFY_EMAIL_ADDRESS, {
         user: newUserDeatils,
         code: otp,

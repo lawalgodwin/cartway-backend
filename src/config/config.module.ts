@@ -25,7 +25,7 @@ import * as Joi from 'joi';
         JWT_SECRET: Joi.string().required(),
         FIRST_SUPERUSER_EMAIL: Joi.string().required(),
         FIRST_SUPERUSER: Joi.string().required(),
-        FIRST_SUPERUSER_PASSWORD: Joi.string().required()
+        FIRST_SUPERUSER_PASSWORD: Joi.string().required(),
       }),
     }),
   ],

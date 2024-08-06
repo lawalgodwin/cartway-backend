@@ -1,10 +1,13 @@
-import { BadRequestException, Injectable, UnprocessableEntityException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { UsersRepository } from './users.repository';
 import {
-  CreateUserType,
   UserCreationResponseType,
   UserUpdateResponseType,
 } from 'src/common/types';
@@ -14,10 +17,19 @@ import { Role } from 'src/enums';
 @Injectable()
 export class UsersService {
   constructor(private readonly userRepository: UsersRepository) {}
-  async create(createUserDto: CreateUserDto | User) {
+  async create(createUserDto: CreateUserDto | User, logedInUserRole: Role) {
     const newUser = new User(createUserDto);
-    if (newUser.role === Role.SUPERADMIN) throw new UnprocessableEntityException()
+    // prevent the superuser from accidentally creating another superuser
+    if (newUser.role === Role.SUPERADMIN)
+      throw new UnprocessableEntityException();
     const user = await this.find(newUser.email);
+
+    // prevent the admin from creating another admin
+    if (
+      logedInUserRole === Role.ADMIN &&
+      ![Role.RIDER, Role.VENDOR, Role.CUSTOMER].includes(newUser.role)
+    )
+      throw new UnprocessableEntityException();
 
     // check if user exists
     if (user.length) throw new BadRequestException(USER_ALREADY_EXISTS);
