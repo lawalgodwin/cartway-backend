@@ -8,6 +8,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { UsersRepository } from './users.repository';
 import {
+  RoleType,
   UserCreationResponseType,
   UserUpdateResponseType,
 } from 'src/common/types';
@@ -36,7 +37,7 @@ export class UsersService {
     return this.userRepository.create(newUser);
   }
 
-  async find(email?: string) {
+  async find(email?: string | Role) {
     return await this.userRepository.find({ email });
   }
 
@@ -57,5 +58,9 @@ export class UsersService {
 
   async remove(id: string) {
     return await this.userRepository.findOneAndDelete({ id });
+  }
+
+  async allVendors() {
+    return this.userRepository.find({ role: Role.VENDOR });
   }
 }

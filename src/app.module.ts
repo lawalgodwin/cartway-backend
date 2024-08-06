@@ -10,6 +10,7 @@ import { ConfigModule } from './config';
 import { ConfigService } from '@nestjs/config';
 import { GetUserMiddleware } from './middleware/get-user.middleware';
 import { UsersController } from './resource/users/users.controller';
+import { VendorModule } from './resource/vendors/vendor.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { UsersController } from './resource/users/users.controller';
       }),
       inject: [ConfigService],
     }),
+    VendorModule
   ],
   providers: [AppService],
   controllers: [AppController],
