@@ -10,6 +10,7 @@ import { ConfigModule } from './config';
 import { ConfigService } from '@nestjs/config';
 import { GetUserMiddleware } from './middleware/get-user.middleware';
 import { UsersController } from './resource/users/users.controller';
+import { CacheModule } from './cache';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UsersController } from './resource/users/users.controller';
     UsersModule,
     AuthModule,
     MailModule,
+    CacheModule,
     BullModule.forRootAsync({
       useFactory: async (configService: ConfigService) => ({
         redis: {

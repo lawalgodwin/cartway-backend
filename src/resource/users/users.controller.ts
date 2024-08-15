@@ -19,7 +19,12 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
-import { AdminGuard, AuthenticationGuard, CustomerGuard, SuperAdminGuard } from 'src/common/guards';
+import {
+  AdminGuard,
+  AuthenticationGuard,
+  CustomerGuard,
+  SuperAdminGuard,
+} from 'src/common/guards';
 
 @ApiTags('users')
 @UseGuards(AuthenticationGuard)

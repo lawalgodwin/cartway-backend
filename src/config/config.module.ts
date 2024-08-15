@@ -22,6 +22,7 @@ import * as Joi from 'joi';
         OTP_LENGTH: Joi.number().required(),
         REDIS_HOST: Joi.string().required(),
         REDIS_PORT: Joi.number().required(),
+        CACHE_TTL: Joi.number().required(),
         JWT_SECRET: Joi.string().required(),
       }),
     }),
