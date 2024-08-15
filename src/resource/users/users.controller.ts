@@ -23,17 +23,11 @@ import { User } from './entities/user.entity';
 import {
   AdminGuard,
   AuthenticationGuard,
-<<<<<<< HEAD
   CurrentUser,
   RoleType,
   SuperAdminGuard,
 } from 'src/common';
 import { JwtPayload } from 'src/common/types/jwtpayload.type';
-=======
-  CustomerGuard,
-  SuperAdminGuard,
-} from 'src/common/guards';
->>>>>>> cache
 
 @ApiTags('users')
 @UseGuards(AuthenticationGuard)
