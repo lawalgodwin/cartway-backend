@@ -12,6 +12,8 @@ import { GetUserMiddleware } from './middleware/get-user.middleware';
 import { UsersController } from './resource/users/users.controller';
 import { VendorModule } from './resource/vendors/vendor.module';
 import { CacheModule } from './cache';
+import { PaymentsModule } from './payments/payments.module';
+import { OrdersModule } from './resource/orders/orders.module';
 
 @Module({
   imports: [
@@ -30,7 +32,9 @@ import { CacheModule } from './cache';
       }),
       inject: [ConfigService],
     }),
-    VendorModule
+    VendorModule,
+    PaymentsModule,
+    OrdersModule,
   ],
   providers: [AppService],
   controllers: [AppController],

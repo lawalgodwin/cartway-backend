@@ -37,6 +37,8 @@
     "@nestjs/typeorm": "^10.0.2",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/uuid": "^10.0.0",
+    "axios": "^1.7.4",
     "bcrypt": "^5.1.1",
     "bullmq": "^5.10.3",
     "class-transformer": "^0.5.1",
@@ -51,7 +53,8 @@
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.20",
-    "typeorm-extension": "^3.5.1"
+    "typeorm-extension": "^3.5.1",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@nestjs/schematics": "^10.0.0",
