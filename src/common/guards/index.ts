@@ -5,3 +5,4 @@ export * from './rider.guard';
 export * from './super-admin.guard';
 export * from './vendor.guard';
 export * from './customer.guard';
+export * from './payment-webhook.guard'

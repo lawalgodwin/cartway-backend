@@ -1,13 +1,14 @@
-import { Controller, Post, Res } from '@nestjs/common';
+import { Controller, Post, Res, UseGuards } from '@nestjs/common';
 import { PaymentsService } from './payments.service';
-import { Request, Response } from 'express';
-import { TransactionData } from 'src/common';
+import { Response } from 'express';
+import { PaymentWebhookGuard, TransactionData } from 'src/common';
 
 @Controller()
 // @Controller('payments')
 export class PaymentsController {
   constructor(private paymentService: PaymentsService) {}
 
+  @UseGuards(PaymentWebhookGuard)
   @Post('api/monnify/webhook')
   // @Post('api/monnify/transaction/complete/webhook')
   async handleSucessfulPayment(
