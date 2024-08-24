@@ -88,7 +88,7 @@ export class PaymentsService {
   async processPayment(paymentData: PaymentDataType) {
     // create an order in your db with product id, trans ref, payment ref and status pending
     const orderCode = await generateCode(7, 'food');
-    console.log(orderCode);
+    // console.log(orderCode);
     const response = await this.initializeTransaction(paymentData);
     // check if you hot a response
     if (Object.keys(response).length > 0) {
