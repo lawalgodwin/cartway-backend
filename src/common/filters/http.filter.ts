@@ -9,7 +9,7 @@ import {
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const httpCtx = host.switchToHttp();
-    // const resques = httpCtx.getRequest()
+    // const resquest = httpCtx.getRequest()
     const response = httpCtx.getResponse();
     const statusCode = exception.getStatus();
 

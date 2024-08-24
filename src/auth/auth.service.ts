@@ -46,7 +46,7 @@ export class AuthService {
 
   async loginUser(loginDto: LoginDto) {
     const { email, password } = loginDto;
-    const users = await this.userService.find(email);
+    const users = await this.userService.findBy(email);
     if (!users.length)
       throw new UnauthorizedException(EMAIL_OR_PASSWORD_NOT_CORRECT);
     const user = users[0];

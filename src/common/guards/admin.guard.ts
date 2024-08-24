@@ -5,6 +5,6 @@ import { Role } from 'src/enums';
 @Injectable()
 export class AdminGuard extends AuthorizationGuard {
   constructor() {
-    super([Role.ADMIN, Role.SUPERADMIN]);
+    super([Role.CUSTOMER, Role.ADMIN, Role.SUPERADMIN]);
   }
 }

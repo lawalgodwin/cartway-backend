@@ -11,9 +11,15 @@ import { ConfigService } from '@nestjs/config';
 import { GetUserMiddleware } from './middleware/get-user.middleware';
 import { UsersController } from './resource/users/users.controller';
 import { VendorModule } from './resource/vendors/vendor.module';
+<<<<<<< HEAD
 import { CacheModule } from './cache';
 import { PaymentsModule } from './payments/payments.module';
 import { OrdersModule } from './resource/orders/orders.module';
+=======
+import { VendorController } from './resource/vendors/controllers/vendor.controller';
+import { MenuController } from './resource/vendors/controllers/menu.controller';
+import { FilesModule } from './resource/files/files.module';
+>>>>>>> file-upload
 
 @Module({
   imports: [
@@ -33,14 +39,20 @@ import { OrdersModule } from './resource/orders/orders.module';
       inject: [ConfigService],
     }),
     VendorModule,
+<<<<<<< HEAD
     PaymentsModule,
     OrdersModule,
+=======
+    FilesModule,
+>>>>>>> file-upload
   ],
   providers: [AppService],
   controllers: [AppController],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(GetUserMiddleware).forRoutes(UsersController);
+    consumer
+      .apply(GetUserMiddleware)
+      .forRoutes(UsersController, VendorController, MenuController);
   }
 }
