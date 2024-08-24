@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
+import { UsersService } from 'src/resource/users/users.service';
 
 @Injectable()
 export class VendorService {
@@ -8,9 +8,11 @@ export class VendorService {
   async getAllVendors() {
     const availableVendors = await this.userService.allVendors();
     const vendors = availableVendors.map((vendor) => {
-        const {password, role, ...vendorDetails} = JSON.parse(JSON.stringify(vendor))
-        return vendorDetails
-      });
+      const { password, role, ...vendorDetails } = JSON.parse(
+        JSON.stringify(vendor),
+      );
+      return vendorDetails;
+    });
     return vendors;
   }
 }

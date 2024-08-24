@@ -20,10 +20,11 @@ export class UsersService {
   constructor(private readonly userRepository: UsersRepository) {}
   async create(createUserDto: CreateUserDto | User, logedInUserRole: Role) {
     const newUser = new User(createUserDto);
+    newUser.role = newUser.role || Role.CUSTOMER
     // prevent the superuser from accidentally creating another superuser
     if (newUser.role === Role.SUPERADMIN)
       throw new UnprocessableEntityException();
-    const user = await this.find(newUser.email);
+    const user = await this.findBy(newUser.email);
 
     // prevent the admin from creating another admin
     if (
@@ -37,8 +38,12 @@ export class UsersService {
     return this.userRepository.create(newUser);
   }
 
-  async find(email?: string | Role) {
+  async findBy(email: string) {
     return await this.userRepository.find({ email });
+  }
+
+  async find() {
+    return await this.userRepository.find({});
   }
 
   async findOne(id: string): Promise<UserCreationResponseType> {

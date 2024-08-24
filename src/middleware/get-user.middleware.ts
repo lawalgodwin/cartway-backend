@@ -5,8 +5,7 @@ import { verifyJwtToken } from 'src/helpers';
 @Injectable()
 export class GetUserMiddleware implements NestMiddleware {
   async use(req: Request, res: Response, next: NextFunction) {
-    const authJwtToken = req.headers.authorization;
-
+    const authJwtToken = req.headers['x-auth'];
     if (!authJwtToken) {
       next();
       return;
@@ -18,6 +17,7 @@ export class GetUserMiddleware implements NestMiddleware {
       }
     } catch (error) {
       Logger.log('Error handling authentication', error);
+      req['user'] = null;
     }
     next();
   }

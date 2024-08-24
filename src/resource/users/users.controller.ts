@@ -16,7 +16,10 @@ import {
   ApiBadRequestResponse,
   ApiBearerAuth,
   ApiCreatedResponse,
+  ApiHeader,
+  ApiHeaders,
   ApiNotFoundResponse,
+  ApiSecurity,
   ApiTags,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
@@ -32,7 +35,8 @@ import { JwtPayload } from 'src/common/types/jwtpayload.type';
 @ApiTags('users')
 @UseGuards(AuthenticationGuard)
 @UseGuards(AdminGuard)
-@ApiBearerAuth()
+@ApiHeaders([{name: 'x-auth', required: true}])
+@ApiSecurity('x-auth')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
