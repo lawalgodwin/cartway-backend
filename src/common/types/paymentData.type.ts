@@ -4,3 +4,5 @@ export type PaymentDataType = {
   customerEmail: string;
   paymentDescription: string;
 };
+
+export type PaymentStatusType = "PENDING" |"AWAITING_PAYMENT" | "CANCELED" | "PAID"
